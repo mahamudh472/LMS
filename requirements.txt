@@ -2,7 +2,7 @@ asgiref==3.7.2
 certifi==2023.11.17
 charset-normalizer==3.3.2
 distlib==0.3.8
-Django==5.0
+Django
 django-autoslug==1.9.9
 django-cleanup==8.0.0
 django-crispy-forms==2.1
