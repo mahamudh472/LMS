@@ -59,8 +59,8 @@
           <!-- login and logout area -->
           <div class="col-lg-3 col-md-4 col-sm-5 col-5">
             <div class="login_signUp">
-              <a href="login" class="log_in">Log In</a>
-              <a href="signup" class="sign_up" >Sign Up</a>
+              <a href="{% url 'accounts:login' %}" class="log_in">Log In</a>
+              <a href="{% url 'accounts:signup' %}" class="sign_up" >Sign Up</a>
             </div>
           </div>
         </div>
