@@ -13,7 +13,7 @@ class Book(models.Model):
     slug = AutoSlugField(populate_from='title', unique=True, null=True, blank=True)
     author = models.CharField(max_length=100, blank=False, null=False)
     desc = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="books")
     image = models.ImageField(upload_to='books', blank=True, null=True)
     pages = models.IntegerField(blank=True, null=True)
     count = models.IntegerField(blank=True, null=True, default=1)
