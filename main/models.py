@@ -1,12 +1,15 @@
 from django.db import models
 from autoslug import AutoSlugField
 # Create your models here.
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     desc = models.TextField()
 
     def __str__(self):
         return self.name
+
 
 class Book(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
@@ -17,12 +20,22 @@ class Book(models.Model):
     image = models.ImageField(upload_to='books', blank=True, null=True)
     pages = models.IntegerField(blank=True, null=True)
     count = models.IntegerField(blank=True, null=True, default=1)
-
+    book_id = models.CharField(max_length=20, blank=True, null=True)
+    issued = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
+
     def is_avail(self):
         if self.count > 0:
             return True
         else:
             return False
+
+    def available(self):
+        return self.count - self.issued
+
+
+class HomeBookCarousel(models.Model):
+    image = models.ImageField(upload_to="Book_carousel", blank=True, null=True)
+

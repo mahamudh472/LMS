@@ -1,47 +1,116 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+    <style>
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    
+    </style>
+{% endblock %}
 {% block body %}
 
     <!-- booking applyed boooks form using her username -->
 
-    <main class="read_books mt-1">
-
+    <main class="read_books mt-3">
         <div class="container">
-            <div class="row">
-                <!-- select img show here -->
-                <div class="col-lg-5 col-xl-5 col-md-5 col-sm-12 col-12 booking_book_left">
-                    <div class="booking_img d-flex justify-content-center ">
-                        <img src="{{book.image.url}}" alt="books-img">
-
-                    </div>
+            <div class="row shadow bg-primary-subtle rounded py-3">
+                <div class="col-4">
+                    <img class="img-fluid" src="{{ book.image.url }}" alt="">
                 </div>
+                <div class="col-8 py-2">
+                    <h3>{{ book.title }}</h3>
+                    <h4>Author : {{ book.author }}</h4>
+                    <p>{{ book.desc }}</p>
+                    <p>Pages : {{ book.pages }}</p>
 
-                <!-- some booking criteria here -->
-                <div class="col-lg-7 col-xl-7 col-md-7 col-sm-12 col-12">
-
-                    <div class="booking_criteria text-center">
-                        <h2>{{book.title}}</h2>
-                          <h2 class="fs-5 ">{{book.author}}</h2>
-                          <p  >Page - <span>{{book.pages}}</span></p>
-                          <h3 class="fs-6 fw-semibold pt-2 pb-1">বইটি পড়ার জন্য নিচের দেয়া ফর্মটি পূরণ করুন</h3>
-                          <form action="#">
-                           
-                            <div class="for_booking">
-                                <input type="text" placeholder="Your Name" required>
-                                <input type="text" placeholder="Your Department" required>
-                                <input type="number" placeholder="Your Roll" required>
-                                <input type="text" placeholder="Your Shift" required>
-                                <input type="text" placeholder="Your Group" required>
-                            </div>
-
-                            <button>Read Book</button>
-                          </form>
-                    </div>
-
+                    <button class="btn btn-success">Request for this book</button>
                 </div>
             </div>
-        </div>
+            <div class="row my-5">
+                <h2>Book Holders</h2>
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Borrow Date</th>
+                        <th scope="col">Time Remaining</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Rejaul Islam</td>
+                        <td>15 May 2024</td>
+                        <td>10days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Mahmud Hasan</td>
+                        <td>12 May 2024</td>
+                        <td>20days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Mahmud Hasan</td>
+                        <td>12 May 2024</td>
+                        <td>20days</td>
+                    </tr>
 
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <h2>Comments</h2>
+                <div class="row">
+                    <div class="col-12 p-3">
+                        
+                        <a href="#">
+                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-3">
+                        
+                        <a href="#">
+                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-3">
+                        
+                        <a href="#">
+                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-3">
+                        
+                        <a href="#">
+                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </main>
 
 

@@ -51,8 +51,7 @@
 }
 
 .selector .selector-filter {
-    border: 1px solid var(--border-color);
-    border-width: 0 1px;
+    border: 0 1px solid var(--border-color);
     padding: 8px;
     color: var(--body-quiet-color);
     font-size: 0.625rem;
@@ -257,7 +256,7 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 }
 
 .stacked .active.selector-remove {
-    background-position: 0 0px;
+    background-position: 0 0;
     cursor: pointer;
 }
 
@@ -570,7 +569,7 @@ ul.timelist, .timelist li {
     background: url(../img/inline-delete.svg) 0 0 no-repeat;
     width: 16px;
     height: 16px;
-    border: 0px none;
+    border: 0 none;
 }
 
 .inline-deletelink:focus, .inline-deletelink:hover {

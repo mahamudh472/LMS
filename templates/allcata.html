@@ -21,9 +21,9 @@
             <h2 class="catagory_name">{{category.name}}</h2>
         </div>
     </div>
-    
+
     <div class="row">
-        <div class="catagory_slider" id="slider1">
+        <div class="catagory_slider" id="slider{{ forloop.counter }}">
             {% for book in category.books.all %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
                 <a href="#"> <img src="{{book.image.url}}" alt="photo"></a>
@@ -32,18 +32,20 @@
                 <p class="available_status">out of stock</p>
                 <div class="read_and_read_btn">
                     <a href="readBooks.html" class="wish_list">Wish List</a>
-                    <a href="readBooks.html" class="read_now">Read Now</a>
+                    <a href="{% url 'main:book' book.id %}" class="read_now">Read Now</a>
                 </div>
             </div>
             {% endfor %}
+
+
 
 
         </div>
     </div>
 
     <div class="prev_and_next_btn text-center my-4">
-        <button class="prev_btn" data-slider="#slider1">Prev</button>
-        <button class="next_btn" data-slider="#slider1">next</button>
+        <button class="prev_btn" data-slider="#slider{{ forloop.counter }}">Prev</button>
+        <button class="next_btn" data-slider="#slider{{ forloop.counter }}">next</button>
     </div>
 
 </div>

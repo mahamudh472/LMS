@@ -3,328 +3,379 @@
 
 <head>
     {% load static %}
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Library Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
     <!-- fondawsome cdn link -->
     <!-- fontawsome-cdn-links -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <!-- slick-slider-cdn-link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
-        integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
-        integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- main css file link here -->
-    <link rel="stylesheet" href="{% static 'css/main.css'%}" />
-    <link rel="icon" href="{% static 'img/web_img/dpi-logo.png' %}" >
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <link rel="icon" href="{% static 'img/web_img/dpi-logo.png' %}">
+    <style>
+        .menu{
+            min-width: 120px;
+
+        }
+        .menu-item{
+            text-decoration: none;
+            width: 100%;
+            display: block;
+            text-align: center;
+            border-bottom: 2px solid #0d6efd;
+            font-size: 18px;
+            transition: 0.5s;
+            
+        }
+        .menu-item:hover{
+            background-color: #0d6efd;
+            color: white;
+        }
+        menu
+    </style>
+    {% block style %} {% endblock %}
 </head>
 
 <body>
-    <!-- header area start here -->
+<!-- header area start here -->
 
-    <header id="myHeader">
-        <div class="container">
-            <div class="row">
-                <!-- logo area -->
-                <div class="col-lg-5 col-md-5 col-sm-6 col-6">
-                    <div class="web_logo">
-                        <a href="{% url 'index' %}">
-                            <h1>কেন্দ্রীয় লাইব্রেরী</h1>
-                        </a>
-                        <a href="https://dpi.edu.bd/">
-                            <h2>দিনাজপুর পলিটেকনিক ইনস্টিটিউট</h2>
-                        </a>
-                    </div>
+<header id="myHeader">
+    <div class="container">
+        <div class="row">
+            <!-- logo area -->
+            <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+                <div class="web_logo">
+                    <a href="{% url 'index' %}">
+                        <h1>কেন্দ্রীয় লাইব্রেরী</h1>
+                    </a>
+                    <a href="https://dpi.edu.bd/">
+                        <h2>দিনাজপুর পলিটেকনিক ইনস্টিটিউট</h2>
+                    </a>
                 </div>
+            </div>
 
-                <!-- add some feature in future -->
-                <div class="col-lg-4 col-md-3 col-sm-1 col-1"></div>
+            <!-- add some feature in future -->
+            <div class="col-lg-4 col-md-3 col-sm-1 col-1"></div>
 
-                <!-- login and logout area -->
-                <div class="col-lg-3 col-md-4 col-sm-5 col-5">
-                    <div class="login_signUp">
+            <!-- login and logout area -->
+            <div class="col-lg-3 col-md-4 col-sm-5 col-5">
+
+                <div class="login_signUp ">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:logout' %}" class="sign_up">Log out</a>
+                        <a href="#" data-toggle="popover"
+                           ><i class="fa fa-user-circle align-middle h2 align-middle"></i></a>
+                        <a href="#" class="h2"></a>
+                    {% else %}
                         <a href="{% url 'accounts:login' %}" class="log_in">Log In</a>
                         <a href="{% url 'accounts:signup' %}" class="sign_up">Sign Up</a>
-                    </div>
+
+                    {% endif %}
+
                 </div>
+
+
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
 
+<!-- menubar area -->
 
-    <!-- menubar area -->
-
-    <section class="menubar ">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-md-5 col-sm-4 col-5">
-                    <!-- .... -->
-                    <nav class="navbar navbar-expand-lg my_nav">
-                        <div class="container-fluid">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+<section class="menubar ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-5 col-sm-4 col-5">
+                <!-- .... -->
+                <nav class="navbar navbar-expand-lg my_nav">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                 aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link active active_home" aria-current="page" href="{% url 'index' %}">Home</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Categories
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            {% for category in categories %}
-                                            <li><a class="dropdown-item" href="#">{{ category.name }}</a></li>
-                                            {% endfor %}
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active active_home" aria-current="page" href="{% url 'index' %}">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        Categories
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        {% for category in categories %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'main:book_by_category' category.name %}">{{ category.name }}</a>
+                                            </li>
+                                        {% endfor %}
 
-                                           
-                                            
-                                        </ul>
+
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Contact</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- .... -->
+            </div>
+            <div class="col-lg-2 col-md-7 col-sm-8 col-7 use_for_mobile">
+                <div class="search_bar pt-2 ">
+                    <form action="main/search" method="get">
+                        <input type="text" placeholder="Search Title" name="search_text" required/>
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- menubar area end here -->
+
+<!-- main-section here -->
+<main class="main_area">
+    <div class="container">
+        <div class="row">
+
+            <!-- this is main body's left side -->
+            <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12 ">
+
+                {% block body %}{% endblock %}
+
+
+            </div>
+
+            <!-- this is main body's right side -->
+            <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12 col-12 my-3">
+                <!-- search bar  -->
+                <div class="row">
+                    <div class="col-lg-12 col-xl-12 col-md-6 col-sm-6 col-6">
+                        <div class="search_bar hide_for_mobile">
+                            <form action="{% url 'main:search' %}" method="get">
+                                <input type="text" placeholder="Search Title" name="search_text" required/>
+                                <button type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </form>
+                            <p>Advanced Search</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- catagorys -->
+                <div class="row">
+                    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12">
+                        <div class="find_catagory">
+                            <h3 class="fs-4">Catagory</h3>
+
+                            <ul>
+                                {% for category in categories %}
+                                    <li>
+                                        <a href="{% url 'main:book_by_category' category.name %}">{{ category.name }}</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">About</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Contact</a>
-                                    </li>
-                                    
-                                </ul>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- books of the week -->
+
+                <div class="row">
+
+                    <div class="col-lg-12 col-xl-12 col-md-6 col-sm-12 col-12 mt-3">
+                        <h2 class="py-5 mb-2">Books of the week</h2>
+                        <div class="top_books_and_focus">
+                            <div class="top_books_and_focus_top">
+                                <a href="#"><img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}"
+                                                 alt="photo"/></a>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    Laboriosam est minus ducimus autem eum consequatur tempora
+                                    accusantium sed perferendis, explicabo, doloremque odit
+                                    ut, asperiores necessitatibus. Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. <a href="#">more</a>
+                                </p>
+                            </div>
+                            <div class="top_books_and_focus_down">
+                                <div class="writer_name">
+                                    <h2 class="books_name text-center pt-2">HTML & MY SQL</h2>
+                                    <h3>Rejaul Islam</h3>
+                                </div>
                             </div>
                         </div>
-                    </nav>
-                    <!-- .... -->
-                </div>
-                <div class="col-lg-2 col-md-7 col-sm-8 col-7 use_for_mobile">
-                    <div class="search_bar pt-2 ">
-                        <form action="main/search" method="get">
-                            <input type="text" placeholder="Search Title" name="search_text" required />
-                            <button type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
-                        </form>
-
                     </div>
+
+                    <div class="col-lg-12 col-xl-12 col-md-6 col-sm-12 col-12 mt-3">
+                        <h2 class="py-5 mb-2">Books of the week</h2>
+                        <div class="top_books_and_focus">
+                            <div class="top_books_and_focus_top">
+                                <a href="#"><img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}"
+                                                 alt="photo"/></a>
+
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    Laboriosam est minus ducimus autem eum consequatur tempora
+                                    accusantium sed perferendis, explicabo, doloremque odit
+                                    ut, asperiores necessitatibus. Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. <a href="#">more</a>
+                                </p>
+                            </div>
+                            <div class="top_books_and_focus_down">
+                                <div class="writer_name">
+                                    <h2 class="books_name text-center pt-2">HTML & MY SQL</h2>
+                                    <h3>Rejaul Islam</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- books of the week -->
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- book display with some different types -->
+</main>
+<!-- main-section here -->
+
+<!-- footer area start here -->
+
+<footer>
+    <div class="container">
+        <!-- footer details -->
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
+                <div class="footer_left py-4">
+                    <h2>Dinajpur Polytechnic Institute</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
+                        voluptatem, cupiditate facilis accusamus velit ipsum nisi.
+
+                    </p>
+
+                    <form action="#">
+                        <input type="email" placeholder="Enter Your Email Acount" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12 col-12">
+                <div class="schedule py-4">
+                    <h2 class="fw-4 text-light">Schedule</h2>
+                    <ul class="px-0">
+                        <li>Sunday- Computer</li>
+                        <li>Monday- Electrical</li>
+                        <li>tuesday- Civil</li>
+                        <li>Wednesday- Architechture</li>
+                        <li>Thursday- Mechanical</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12 col-12">
+
+                <div class="footer_right_top py-4">
+                    <h2 class="fw-4 text-light">Follow Us</h2>
+                    <ul class="px-0">
+                        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer_right_down py-4">
+                    <h2 class="fw-4 text-light">Contact</h2>
+                    <p><i class="fa-solid fa-phone-flip text-light"></i> <a href="tel:+8801569164500"
+                                                                            class="text-decoration-none text-light mx-2 ">+8801569164500</a>
+                    </p>
+                    <p><i class="fa-solid fa-envelope text-light"></i><a href="https://mail.google.com/"
+                                                                         class="text-decoration-none text-light mx-2">
+                        rejaulislammr25@gmail.com</a></p>
                 </div>
 
             </div>
         </div>
-    </section>
 
-    <!-- menubar area end here -->
-
-    <!-- main-section here -->
-    <main class="main_area">
-        <div class="container">
-            <div class="row">
-
-                <!-- this is main body's left side -->
-                <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12 ">
-
-                    {% block body %}{% endblock %}
-
-
-
-                </div>
-
-                <!-- this is main body's right side -->
-                <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12 col-12 my-3">
-                    <!-- search bar  -->
-                    <div class="row">
-                        <div class="col-lg-12 col-xl-12 col-md-6 col-sm-6 col-6">
-                            <div class="search_bar hide_for_mobile">
-                                <form action="{% url 'main:search' %}" method="get">
-                                    <input type="text" placeholder="Search Title" name="search_text" required />
-                                    <button type="submit">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </button>
-                                </form>
-                                <p>Advanced Search</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- catagorys -->
-                    <div class="row">
-                        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12">
-                            <div class="find_catagory">
-                                <h3 class="fs-4">Catagory</h3>
-
-                                <ul>
-                                    {% for category in categories %}
-                                    <li><a href="{% url 'main:book_by_category' category.name %}">{{ category.name }}</a></li>
-                                    {% endfor %}
-                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- books of the week -->
-
-                    <div class="row">
-
-                        <div class="col-lg-12 col-xl-12 col-md-6 col-sm-12 col-12 mt-3">
-                            <h2 class="py-5 mb-2">Books of the week</h2>
-                            <div class="top_books_and_focus">
-                                <div class="top_books_and_focus_top">
-                                    <a href="#"><img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}"
-                                            alt="photo" /></a>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Laboriosam est minus ducimus autem eum consequatur tempora
-                                        accusantium sed perferendis, explicabo, doloremque odit
-                                        ut, asperiores necessitatibus. Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. <a href="#">more</a>
-                                    </p>
-                                </div>
-                                <div class="top_books_and_focus_down">
-                                    <div class="writer_name">
-                                        <h2 class="books_name text-center pt-2">HTML & MY SQL</h2>
-                                        <h3>Rejaul Islam</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-xl-12 col-md-6 col-sm-12 col-12 mt-3">
-                            <h2 class="py-5 mb-2">Books of the week</h2>
-                            <div class="top_books_and_focus">
-                                <div class="top_books_and_focus_top">
-                                    <a href="#"><img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}"
-                                            alt="photo" /></a>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Laboriosam est minus ducimus autem eum consequatur tempora
-                                        accusantium sed perferendis, explicabo, doloremque odit
-                                        ut, asperiores necessitatibus. Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. <a href="#">more</a>
-                                    </p>
-                                </div>
-                                <div class="top_books_and_focus_down">
-                                    <div class="writer_name">
-                                        <h2 class="books_name text-center pt-2">HTML & MY SQL</h2>
-                                        <h3>Rejaul Islam</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- books of the week -->
-
-
-
-
-                </div>
-
+        <!-- copyright area -->
+        <div class="row">
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 py-3 ">
+                <p class="text-light text-center py-3">All &copy; Copyright are reserved by the dedicated team</p>
             </div>
         </div>
+    </div>
+</footer>
 
+<!-- footer area start here -->
 
-        <!-- book display with some different types -->
-    </main>
-    <!-- main-section here -->
-
-    <!-- footer area start here -->
-
-    <footer>
-        <div class="container">
-            <!-- footer details -->
-            <div class="row">
-                <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
-                    <div class="footer_left py-4">
-                        <h2>Dinajpur Polytechnic Institute</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                            voluptatem, cupiditate facilis accusamus velit ipsum nisi.
-
-                        </p>
-
-                        <form action="#">
-                            <input type="email" placeholder="Enter Your Email Acount" required>
-                            <button type="submit">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12 col-12">
-                    <div class="schedule py-4">
-                        <h2 class="fw-4 text-light">Schedule</h2>
-                        <ul class="px-0">
-                            <li>Sunday- Computer</li>
-                            <li>Monday- Electrical</li>
-                            <li>tuesday- Civil</li>
-                            <li>Wednesday- Architechture</li>
-                            <li>Thursday- Mechanical</li>
-
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12 col-12">
-
-                    <div class="footer_right_top py-4">
-                        <h2 class="fw-4 text-light">Follow Us</h2>
-                        <ul class="px-0">
-                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-
-                        </ul>
-                    </div>
-
-                    <div class="footer_right_down py-4">
-                        <h2 class="fw-4 text-light">Contact</h2>
-                        <p> <i class="fa-solid fa-phone-flip text-light"></i> <a href="tel:+8801569164500"
-                                class="text-decoration-none text-light mx-2 ">+8801569164500</a></p>
-                        <p> <i class="fa-solid fa-envelope text-light"></i><a href="https://mail.google.com/"
-                                class="text-decoration-none text-light mx-2"> rejaulislammr25@gmail.com</a></p>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- copyright area -->
-            <div class="row">
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 py-3 ">
-                    <p class="text-light text-center py-3">All &copy; Copyright are reserved by the dedicated team</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- footer area start here -->
-
-    <!-- bootstrap js file line here -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+<!-- bootstrap js file line here -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
+<!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
 
-    <!-- jquary cdn link here -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+<!-- jquary cdn link here -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <!-- slick slider cdn link here -->
+<!-- slick slider cdn link here -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
         integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- maian js file link here -->
-    <script src="{% static 'js/main.js'%}"></script>
+<!-- maian js file link here -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    let popoverContent = `
+        <div class="menu">
+        <a href="#" class="menu-item"> Profile </a>
+        <a href="#" class="menu-item"> Book History </a>
+        <a href="#" class="menu-item"> Wishlist </a>
+        </div>
+
+    `
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({placement: "bottom", content: popoverContent, html:true});
+    });    
+</script>
 </body>
 
 </html>
