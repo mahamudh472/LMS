@@ -25,11 +25,12 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
     <link rel="icon" href="{% static 'img/web_img/dpi-logo.png' %}">
     <style>
-        .menu{
+        .menu {
             min-width: 120px;
 
         }
-        .menu-item{
+
+        .menu-item {
             text-decoration: none;
             width: 100%;
             display: block;
@@ -37,18 +38,37 @@
             border-bottom: 2px solid #0d6efd;
             font-size: 18px;
             transition: 0.5s;
-            
+
         }
-        .menu-item:hover{
+
+        .menu-item:hover {
             background-color: #0d6efd;
             color: white;
         }
-        menu
+
+        .nav-tabs .nav-item .nav-link {
+            color: #0d6efd;
+        }
     </style>
     {% block style %} {% endblock %}
 </head>
 
 <body>
+{% if account_alert %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ account_alert }}<a href="{% url 'main:student_information' %}">Click here</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
 <!-- header area start here -->
 
 <header id="myHeader">
@@ -75,9 +95,14 @@
                 <div class="login_signUp ">
                     {% if user.is_authenticated %}
                         <a href="{% url 'accounts:logout' %}" class="sign_up">Log out</a>
-                        <a href="#" data-toggle="popover"
-                           ><i class="fa fa-user-circle align-middle h2 align-middle"></i></a>
-                        <a href="#" class="h2"></a>
+                        {% if request.user.is_staff %}
+                            <a href="{% url 'librarian:dashboard' %}"><i
+                                    class="fa fa-user-circle align-middle h2 align-middle"></i></a>
+                        {% else %}
+                            <a data-toggle="modal" data-target="#userModal" style="cursor: pointer;"><i
+                                    class="fa fa-user-circle align-middle h2 align-middle"></i></a>
+
+                        {% endif %}
                     {% else %}
                         <a href="{% url 'accounts:login' %}" class="log_in">Log In</a>
                         <a href="{% url 'accounts:signup' %}" class="sign_up">Sign Up</a>
@@ -110,7 +135,8 @@
                         <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link active active_home" aria-current="page" href="{% url 'index' %}">Home</a>
+                                    <a class="nav-link active active_home" aria-current="page"
+                                       href="{% url 'index' %}">Home</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -120,7 +146,8 @@
                                     <ul class="dropdown-menu">
                                         {% for category in categories %}
                                             <li><a class="dropdown-item"
-                                                   href="{% url 'main:book_by_category' category.name %}">{{ category.name }}</a>
+                                                   href="{% url 'main:book_by_category' category.name %}">
+                                                {{ category }}</a>
                                             </li>
                                         {% endfor %}
 
@@ -197,7 +224,7 @@
                             <ul>
                                 {% for category in categories %}
                                     <li>
-                                        <a href="{% url 'main:book_by_category' category.name %}">{{ category.name }}</a>
+                                        <a href="{% url 'main:book_by_category' category.name %}">{{ category }}</a>
                                     </li>
                                 {% endfor %}
 
@@ -342,6 +369,168 @@
     </div>
 </footer>
 
+
+<!-- Modal -->
+<div class="modal modal-lg fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">User Profile</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                           aria-controls="profile" aria-selected="true">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab"
+                           aria-controls="history" aria-selected="false">Book History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="wishlist-tab" data-toggle="tab" href="#wishlist" role="tab"
+                           aria-controls="wishlist" aria-selected="false">Wishlist</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel"
+                         aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-4 m-5">
+                                <form id="profileForm" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <img id="profileImage"
+                                             src="
+                                                     {% if user.studentprofile.image %}{{ user.studentprofile.image.url }}{% else %}{% static 'img/library_member_img/profile.png' %}{% endif %}"
+                                             alt="Profile Image" class="img-fluid my-2" width="150">
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="file" class="form-control-file" id="imageUpload" name="image">
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary mt-2">Update profile
+                                        Picture
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-6 p-4">
+                                <div class="mb-3 row">
+                                    <label for="staticEmail" class="col-4 col-form-label">Name</label>
+                                    <div class="col-8">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                               value="{{ user.studentprofile.name }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="staticEmail" class="col-4 col-form-label">Shift</label>
+                                    <div class="col-8">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                               value="{{ user.studentprofile.shift }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="staticEmail" class="col-4 col-form-label">Department</label>
+                                    <div class="col-8">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                               value="{{ user.studentprofile.department }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="staticEmail" class="col-4 col-form-label">Roll</label>
+                                    <div class="col-8">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                               value="{{ user.studentprofile.roll }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                        <table class="table table-triped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Book Title</th>
+                                <th scope="col">Status</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for history in user.studentprofile.bookrequest_set.all %}
+                                <tr>
+                                    <th scope="row"><img style="max-width: 70px;" src="{{ history.book.image.url }}"
+                                                         alt=""></th>
+                                    <td><a href="{% url 'main:book' history.book.id %}">{{ history.book.title }}</a>
+                                    </td>
+                                    {% if history.status == 'accepted' or book_req.status == 'received' or book_req.status == 'returned' %}
+                                        <td><span class="badge text-bg-success">{{ history.status }}</span></td>
+                                    {% else %}
+                                        <td><span class="badge text-bg-danger">{{ history.status }}</span></td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                        <h4>Wishlist</h4>
+                    {% if user.studentprofile.wishlist_set.all %}
+                        <table class="table table-triped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Book Title</th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            {% for history in user.studentprofile.wishlist_set.all %}
+                                <tr>
+                                    <th scope="row"><img style="max-width: 70px;" src="{{ history.book.image.url }}"
+                                                         alt=""></th>
+                                    <td><a href="{% url 'main:book' history.book.id %}">{{ history.book.title }}</a>
+                                    </td>
+                                    {% if history.status == 'accepted' or book_req.status == 'received' or book_req.status == 'returned' %}
+                                        <td><span class="badge text-bg-success">{{ history.status }}</span></td>
+                                    {% else %}
+                                        <td><span class="badge text-bg-danger">{{ history.status }}</span></td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'main:remove_from_wishlist' history.book.id %}" class="btn btn-danger">Remove</a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            {% else %}
+                            <div class="alert alert-danger my-2">No items in wishlist</div>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- footer area start here -->
 
 <!-- bootstrap js file line here -->
@@ -362,20 +551,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{% static 'js/main.js' %}"></script>
-<script>
-    let popoverContent = `
-        <div class="menu">
-        <a href="#" class="menu-item"> Profile </a>
-        <a href="#" class="menu-item"> Book History </a>
-        <a href="#" class="menu-item"> Wishlist </a>
-        </div>
 
-    `
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover({placement: "bottom", content: popoverContent, html:true});
-    });    
-</script>
 </body>
 
 </html>

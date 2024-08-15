@@ -24,40 +24,46 @@
                     <h4>Author : {{ book.author }}</h4>
                     <p>{{ book.desc }}</p>
                     <p>Pages : {{ book.pages }}</p>
-
-                    <button class="btn btn-success">Request for this book</button>
+                    {% if not user.is_staff and user.studentprofile.is_active %}
+                        <form action="{% url 'main:request_book' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success" type="submit">Request for this book</button>
+                            <input type="hidden" value="{{ book.id }}" name="book_id">
+                            <input type="number" class="form-control w-25 d-inline" name="days" value="3">
+                        </form>
+                    
+                    {% else %}
+                    <div class="alert alert-danger">You can not Request for this book</div>
+                    {% endif %} 
                 </div>
             </div>
             <div class="row my-5">
                 <h2>Book Holders</h2>
                 <table class="table table-borderless">
+                {% if book_holders %}
                     <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Borrow Date</th>
+                        <th scope="col">Issue Date</th>
                         <th scope="col">Time Remaining</th>
                     </tr>
                     </thead>
                     <tbody>
+                    
+                    {% for item in book_holders %}
                     <tr>
                         <th scope="row">1</th>
-                        <td>Rejaul Islam</td>
-                        <td>15 May 2024</td>
-                        <td>10days</td>
+                        <td>{{ item.student.name }}</td>
+                        <td>{{ item.issue_date }}</td>
+                        <td>{{ item.book_time }} Days</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Mahmud Hasan</td>
-                        <td>12 May 2024</td>
-                        <td>20days</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Mahmud Hasan</td>
-                        <td>12 May 2024</td>
-                        <td>20days</td>
-                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <div class="alert alert-danger">
+                        No book holders yet.
+                    </div>
+                    {% endif %}
 
                     </tbody>
                 </table>

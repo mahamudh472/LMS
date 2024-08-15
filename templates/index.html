@@ -27,32 +27,13 @@
         </div>
 
         <div class="catagory_slider" id="fontSlider1">
-
+            {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
+                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/গল্পে স্বল্পে প্রোগ্রামিং.jpeg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/জাভা প্রোগ্রামিং Java programming A 2 Z.jpg' %}"
-                        alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
+            {% endfor %}
+            
 
         </div>
 
@@ -77,31 +58,12 @@
 
         <div class="catagory_slider" id="fontSlider2">
 
+            {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
+                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/গল্পে স্বল্পে প্রোগ্রামিং.jpeg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/জাভা প্রোগ্রামিং Java programming A 2 Z.jpg' %}"
-                        alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
+            {% endfor %}
 
         </div>
 
@@ -128,32 +90,12 @@
 
         <div class="catagory_slider" id="fontSlider3">
 
+            {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
+                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/গল্পে স্বল্পে প্রোগ্রামিং.jpeg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/জাভা প্রোগ্রামিং Java programming A 2 Z.jpg' %}"
-                        alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
-
-            <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{% static 'img/book_img/HTML-My-SQL.jpg' %}" alt="photo"></a>
-
-            </div>
-
+            {% endfor %}
         </div>
 
         <!-- prev and next  custom button for mobile and tab's only -->

@@ -27,6 +27,22 @@
             </thead>
             <tbody>
 
+              {% for student in students %}
+              <tr>
+                <th scope="row">{{ student.roll }}</th>
+                <td class="text-capitalize">{{ student.name }}</td>
+                <td class="text-capitalize">{{ student.department }}</td>
+                <td class="text-capitalize">{{ student.shift }}</td>
+                <td>{{ student.semester }}</td>
+                {% if student.status == True %}
+                <td><span class="badge text-bg-success">Verified</span></td>
+                {% else %}
+                <td><span class="badge text-bg-danger">Unverified</span></td>
+                {% endif %}
+                
+                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
+              </tr>
+              {% endfor %}
               <tr>
                 <th scope="row">602748</th>
                 <td>Rejaul Islam</td>

@@ -1,0 +1,135 @@
+{% extends "librarian/dashboard.html" %}
+{% load static %}
+{% block content %}
+    <div class="table-title-container d-flex justify-content-between">
+        <h2>Book Requests</h2>
+        <div class="table-search-container d-flex w-50 gap-2">
+            <input type="text" class="form-control" id="search-box" placeholder="Search">
+            <select name="" id="filter" class="form-select">
+                <option value="all" class="form-control">All</option>
+                {% for option in status %}
+                    <option value="{{ option }}" class="form-control">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <table class="table table-striped" id="equipment-table">
+            <thead>
+            <tr>
+                <th scope="col">Book Name</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Student Roll</th>
+                <th scope="col">Request for</th>
+                <th scope="col">Status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for req in requests %}
+                <tr>
+                    <th scope="row">{{ req.book.title }}</th>
+                    <td class="text-capitalize">{{ req.student.name }}</td>
+                    <td class="text-capitalize">{{ req.student.roll }}</td>
+                    <td class="text-capitalize">{{ req.book_time }} Days</td>
+                    {% if req.status == 'accepted' or req.status == 'received' %}
+                        <td><span class="badge text-bg-success">{{ req.status }}</span></td>
+                    {% else %}
+                        <td><span class="badge text-bg-danger">{{ req.status }}</span></td>
+                    {% endif %}
+
+                    <td><span class="cursor-pointer " type="button" data-bs-toggle="modal"
+                              data-bs-target="#Modal{{ req.id }}"><i class="fa fa-edit"></i></span></td>
+                </tr>
+
+                <!-- Button trigger modal -->
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="Modal{{ req.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Request Information</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="fs-6">Book Info:</h3>
+                                <p class="fs-6 mx-2">Name : {{ req.book.title }}</p>
+                                <p class="fs-6 mx-2">Available : {{ req.book.available }}</p>
+
+                                <h3 class="fs-6">Student Info:</h3>
+                                <p class="fs-6 mx-2">Name : {{ req.student.name }}</p>
+                                <p class="fs-6 mx-2">Roll : {{ req.student.roll }}</p>
+                                <p class="fs-6 mx-2">Department : {{ req.student.department }}</p>
+                                <p class="fs-6 mx-2">Shift : {{ req.student.shift }}</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                </button>
+                                {% if req.status == "pending" %}
+                                    <button type="button" class="btn btn-danger" id="reject_req">Reject</button>
+
+                                    <button type="button"
+                                            onclick="document.location.href=`{% url 'librarian:accept_request' req.id %}`"
+                                            class="btn btn-success" id="accept_req">Accept
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $("#search-box").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#equipment-table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        // Filter by status all, verified, unverified
+        $(document).ready(function () {
+            // Function to filter students based on status
+            $('#filter').change(function () {
+                var status = $(this).val();
+                if (status === 'all') {
+                    // Show all rows if 'All' is selected
+                    $('#equipment-table tbody tr').show();
+                } else {
+                    // Hide all rows first
+                    $('#equipment-table tbody tr').hide();
+                    // Show rows with matching status
+                    $('#equipment-table tbody tr').each(function () {
+                        if ($(this).find('td:nth-child(5)').text().trim() === status) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+{% endblock %}
+</body>
+
+</html>

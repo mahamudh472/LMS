@@ -1,0 +1,47 @@
+{% extends "librarian/dashboard.html" %}
+{% load static %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-borderless">
+                <tr>
+                    <th>Book Name:</th>
+                    <td>{{ book_req.book.title }}</td>
+                </tr>
+                <tr>
+                    <th>Student Name:</th>
+                    <td>{{ book_req.student.name }}</td>
+                </tr>
+                <tr>
+                    <th>Requested for:</th>
+                    <td>{{ book_req.book_time }} Days</td>
+                </tr>
+                <th>Status</th>
+                {% if book_req.status == 'accepted' or book_req.status == 'received' or book_req.status == 'returned'  %}
+                    <td><span class="badge text-bg-success">{{ book_req.status }}</span></td>
+                {% else %}
+                    <td><span class="badge text-bg-danger">{{ book_req.status }}</span></td>
+                {% endif %}
+                <tr>
+                    <th>Issue Date:</th>
+                    <td>{{ book_req.issue_date }}</td>
+                </tr>
+                <tr>
+                    <th>Return Date:</th>
+                    <td>{{ book_req.return_date }}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        {% if book_req.status == "accepted" %}
+                            <a class="btn btn-outline-dark" href="{% url 'librarian:issue_book' book_req.id %}">Issue</a>
+                        {% endif %}
+                        {% if book_req.status == "received" %}
+                            <a class="btn btn-outline-dark" href="{% url 'librarian:return_book' book_req.id %}">Return</a>
+                        {% endif %}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
+
+
 # Create your models here.
 
 
@@ -38,4 +40,37 @@ class Book(models.Model):
 
 class HomeBookCarousel(models.Model):
     image = models.ImageField(upload_to="Book_carousel", blank=True, null=True)
+
+
+class BookRequest(models.Model):
+    STATUS_OPTIONS = {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "received": "Received",
+        "returned": "Returned"
+    }
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    student = models.ForeignKey('accounts.StudentProfile', on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_OPTIONS, blank=True, null=True)
+    book_time = models.IntegerField(default=0)
+    issue_date = models.DateField(blank=True, null=True)
+    return_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.book.title} - {self.student.user.username}"
+
+
+class OtpVerification(models.Model):
+    user = models.ForeignKey('accounts.StudentProfile', on_delete=models.CASCADE)
+    req = models.ForeignKey('main.BookRequest', on_delete=models.CASCADE, null=True)
+    otp = models.CharField(max_length=10)
+    send_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
+
+
+class WishList(models.Model):
+    student = models.ForeignKey('accounts.StudentProfile', on_delete=models.CASCADE)
+    book = models.ForeignKey('main.Book', on_delete=models.CASCADE)
+    add_at = models.DateTimeField(auto_now_add=True)
 

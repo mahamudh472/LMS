@@ -31,7 +31,7 @@
                 <h2 class="writer">{{book.author}}</h2>
                 <p class="available_status">out of stock</p>
                 <div class="read_and_read_btn">
-                    <a href="readBooks.html" class="wish_list">Wish List</a>
+                    <a href="{% url 'main:add_to_wishlist' book.id %}" class="wish_list">Wish List</a>
                     <a href="{% url 'main:book' book.id %}" class="read_now">Read Now</a>
                 </div>
             </div>

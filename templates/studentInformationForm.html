@@ -65,7 +65,8 @@
      
                 <!-- form start here -->
 
-             <form action="#">
+             <form action="{% url 'main:student_information' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
                 <div class="row shift">
                     <h2 class="shift_dep">শিফ্ট নির্বাচন করুন-- </h2>
@@ -130,34 +131,34 @@
                 <div class="row">
 
                     <div class="personal_det_group col-lg-6 col-md-12 col-sm-12 col-12">
-                        <label for="name"  ">আপনার পূর্ণ নামটি লিখুন (<span>বাংলায়</span> ) --</label>
-                        <input type="text" " required>
+                        <label for="name"  >আপনার পূর্ণ নামটি লিখুন (<span>বাংলায়</span> ) --</label>
+                        <input type="text" name="name_bangla" required>
                     </div>
 
                     <div class="personal_det_group col-lg-6 col-md-12 col-sm-12 col-12">
                         <label for="name">সার্টিফিকেট অনুযায়ী ( <span>ইংরেজিতে</span> ) --</label>
-                        <input type="text"  required>
+                        <input type="text" name="name"  required>
                     </div>
 
                     <div class="personal_det_group col-lg-6 col-md-12 col-sm-12 col-12">
                         <label for="name">পিতার নাম (<span>বাংলায়</span> ) --</label>
-                        <input type="text" class="custom_width"  required>
+                        <input type="text" class="custom_width" name="father_name" required>
                     </div>
 
                     <div class="personal_det_group col-lg-6 col-md-12 col-sm-12 col-12">
                         <label for="name">মাতার নাম (<span>বাংলায়</span> ) --</label>
-                        <input type="text" class="custom_width"  required>
+                        <input type="text" class="custom_width" name="mother_name"  required>
                     </div>
 
                    
                        
                         <div class="personal_det_group  col-lg-6 col-md-12 col-sm-12 col-12">
                             <label for="name">স্থায়ী ঠিকানা-(<span>গ্রাম</span> ) --</label>
-                            <input type="text" required>
+                            <input type="text" name="address" required>
                         </div>
                         <div class="personal_det_group   col-lg-6 col-md-12 col-sm-12 col-12">
                             <label for="name">ডাকঘর --</label>
-                            <input type="text" required>
+                            <input type="text" name="post_office" required>
                         </div>
 
                   
@@ -166,11 +167,11 @@
                        
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
                             <label for="name">উপজেলা --</label>
-                            <input type="text" required>
+                            <input type="text" name="upazila" required>
                         </div>
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
                             <label for="name">জেলা --</label>
-                            <input type="text" required>
+                            <input type="text" name="district" required>
                         </div>
 
 
@@ -178,11 +179,12 @@
                        
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
                             <label for="name">নিজের মোবাইল -</label>
-                            <input type="number" required>
+                            <input type="text" name="number" required>
                         </div>
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
                             <label for="name">পিতার মোবাইল -</label>
-                            <input type="number" required>
+                            <input type="text" name="parent_number" required>
+
                         </div>
 
                    
@@ -191,17 +193,17 @@
                        
                         <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-6 col-6">
                             <label for="name">রক্তের গ্রুপ-</label>
-                            <input type="text" class="custom_width2" required>
+                            <input type="text" class="custom_width2" name="blood_group" required>
                         </div>
 
                         <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-6 col-6">
                             <label for="name">টেকনোলজি কোড- </label>
-                            <input type="number" class="custom_width2" required>
+                            <input type="number" class="custom_width2" name="technology_code" required>
                         </div>
 
                         <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-6 col-6">
                             <label for="name">পর্ব ও গ্রুপ-</label>
-                            <input type="text" class="custom_width2" required>
+                            <input type="text" class="custom_width2" name="semester" required>
                         </div>
 
                 
@@ -210,11 +212,11 @@
                        
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
                             <label for="name">জন্ম তারিখ-</label>
-                            <input type="date" required>
+                            <input type="date" name="birth_date" required>
                         </div>
                         <div class="personal_det_group col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
                             <label for="name">এস এস সি রোল ও সাল -</label>
-                            <input type="number" required>
+                            <input type="number" name="ssc_roll" required>
                         </div>
 
                 
@@ -222,21 +224,21 @@
 
                     <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-12 col-12  pt-4">
                         <label for="name">নিজের ছবি (<span>পাসপোর্ট</span> ) -</label>
-                        <input type="file" name="myImage" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
+                        <input type="file" name="image" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
                     </div>
 
                     <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-12 col-12  pt-4">
                         <label for="name">নিজের স্বাক্ষর -</label>
-                        <input type="file" name="myImage" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
+                        <input type="file" name="signature" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
                     </div>
 
                     <div class="personal_det_group col-lg-4 col-xl-4 col-md-4 col-sm-12 col-12  pt-4">
                         <label for="name">অভিভাবক এর স্বাক্ষর-</label>
-                        <input type="file" name="myImage" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
+                        <input type="file" name="parent_signature" class="border_none_imp " accept="image/png, image/jpg, image/jpeg" required/>
                     </div>
 
                     <div class="personal_det_group agreement  col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 d-flex  pt-4">
-                        <input type="checkbox" required>
+                        <input type="checkbox" name="policy_agreement" required>
                         <label for="name">আমি দিনাজপুর পলিটেকনিক ইনস্টিটিউট এর লাইব্রেরী সংশ্লিষ্ট সকল নিয়ম-কানুন এর সাথে একমত পোষণ করছি । আমার দ্বারা নিয়মের কোন ব্যত্যয় ঘটলে সংশ্লিষ্ট কর্তৃপক্ষ আমার ওপর যে শাস্তি প্রদান করবে আমি তা মেনে নিব । </label>
                        
                     </div>
