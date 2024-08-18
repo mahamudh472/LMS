@@ -9,8 +9,8 @@ $(document).ready(function () {
    
     });
 
-  
-    
+
+
   });
 
 
@@ -177,12 +177,12 @@ $(document).ready(function () {
   
 
         // Custom button click events
-        $('.prev_btn').click(function(){
+        $('#prev_btn').click(function(){
           var sliderId = $(this).data('slider');
           $(sliderId).slick('slickPrev');
         });
     
-        $('.next_btn').click(function(){
+        $('#next_btn').click(function(){
           var sliderId = $(this).data('slider');
           $(sliderId).slick('slickNext');
         });

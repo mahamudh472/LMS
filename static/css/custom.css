@@ -1,0 +1,101 @@
+{% load static %}
+.menubar {
+    background-color: rgba(75, 54, 33, .6) !important;
+}
+
+.nav-item a {
+    color: #F5F5F5 !important;
+    font-weight: 400 !important;
+}
+
+.nav-item a:hover {
+    color: #6B4F34 !important;
+}
+
+footer {
+    background-color: #4B3621 !important;
+}
+
+.footer_left h2, .footer_left p, .text-light, .schedule ul li {
+    color: #F1E1C2 !important;
+}
+
+.footer_right_top ul li a, .footer_link {
+    color: #556B2F !important;
+}
+
+.footer_right_top ul li a:hover, .footer_link:hover {
+    color: #FFD700 !important;
+}
+
+.web_logo a, .display_book_cata_and_more a, .find_catagory ul li a {
+    color: #8B0000 !important;
+}
+
+.web_logo a:hover, .display_book_cata_and_more a:hover, .find_catagory ul li a:hover {
+    color: #660000 !important;
+}
+
+h2, h3 {
+    color: #4B3621 !important;
+}
+
+.search_bar form input {
+    background-color: #F5F5F5 !important;
+    border: 1px solid #556B2F !important;
+    color: #2F2F2F !important;
+}
+
+.search_bar form input::placeholder {
+    color: #A9A9A9 !important;
+}
+
+.my-btn-primary, .my-btn-secondary {
+    padding: 6px 12px !important;
+    border-radius: 5px !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.my-btn-primary {
+    background-color: #556B2F !important;
+    color: #FFFFFF !important;
+}
+
+.my-btn-secondary {
+    background-color: #C05726 !important;
+    color: #FFFFFF !important;
+}
+
+.my-btn-primary:hover {
+    background-color: #3E4C2A !important;
+}
+
+.my-btn-secondary:hover {
+    background-color: #A0401A !important;
+}
+.my-btn-right{
+    border-radius: 0 5px 5px 0 !important;
+}
+.top_books_and_focus{
+    background-color: #F1E1C2 !important;
+    border: 1px solid #4B3621;
+    color: #2F2F2F !important;
+}
+.writer_name{
+    background: none !important;
+}
+.navbar{
+    padding: 0 !important;
+}
+.dropdown-menu{
+    background-color: #4B3621 !important;
+    padding: 0 !important;
+}
+.dropdown-menu li{
+    padding: 0 !important;
+}
+.menubar.sticky{
+    background-color: rgba(75, 54, 33, 1) !important;
+}
+
