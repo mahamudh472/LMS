@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 
 from LMS import settings
-from main.models import Book, BookRequest, OtpVerification
+from main.models import Book, BookRequest, OtpVerification, Category
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from accounts.models import StudentProfile
@@ -16,7 +16,17 @@ from django.http import JsonResponse
 
 @staff_member_required
 def dashboard(request):
-    return render(request, 'librarian/index.html')
+    total_students = StudentProfile.objects.all().count()
+    total_books = Book.objects.all().count()
+    total_categories = Category.objects.all().count()
+    issued_books = BookRequest.objects.filter(status="accepted").count()
+    context = {
+        "total_students": total_students,
+        "total_books": total_books,
+        "total_categories": total_categories,
+        "issued_books": issued_books
+    }
+    return render(request, 'librarian/index.html', context)
 @staff_member_required
 def students(request):
     student_list = StudentProfile.objects.all()
