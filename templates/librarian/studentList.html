@@ -1,21 +1,22 @@
 {% extends "librarian/dashboard.html" %}
 {% load static %}
+{% load custom_tags %}
 {% block content %}
-        <div class="table-title-container d-flex justify-content-between">
-          <h2>Student List</h2>
-          <div class="table-search-container d-flex w-50 gap-2">
+    <div class="table-title-container d-flex justify-content-between">
+        <h2>Student List</h2>
+        <div class="table-search-container d-flex w-50 gap-2">
             <input type="text" class="form-control" id="search-box" placeholder="Search">
             <select name="" id="filter" class="form-select">
-              <option value="all" class="form-control">All</option>
-              <option value="Verified" class="form-control">Verified</option>
-              <option value="Unverified" class="form-control">Unverified</option>
+                <option value="all" class="form-control">All</option>
+                <option value="Verified" class="form-control">Verified</option>
+                <option value="Unverified" class="form-control">Unverified</option>
             </select>
-          </div>
         </div>
-        <div class="card mt-2">
-          <table class="table table-striped" id="equipment-table">
+    </div>
+    <div class="card mt-2">
+        <table class="table table-striped" id="equipment-table">
             <thead>
-              <tr>
+            <tr>
                 <th scope="col">Roll</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Department</th>
@@ -23,112 +24,109 @@
                 <th scope="col">Semester</th>
                 <th scope="col">Status</th>
                 <th></th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
 
-              {% for student in students %}
-              <tr>
-                <th scope="row">{{ student.roll }}</th>
-                <td class="text-capitalize">{{ student.name }}</td>
-                <td class="text-capitalize">{{ student.department }}</td>
-                <td class="text-capitalize">{{ student.shift }}</td>
-                <td>{{ student.semester }}</td>
-                {% if student.status == True %}
-                <td><span class="badge text-bg-success">Verified</span></td>
-                {% else %}
-                <td><span class="badge text-bg-danger">Unverified</span></td>
-                {% endif %}
-                
-                <td><span role="button"><i class="fa fa-edit"></i></span></td>
-              </tr>
-              {% endfor %}
-              <tr>
-                <th scope="row">602748</th>
-                <td>Rejaul Islam</td>
-                <td>Computer</td>
-                <td>1st</td>
-                <td>5th</td>
-                <td><span class="badge text-bg-danger">Unverified</span></td>
-                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-              </tr>
-              <tr>
-                <th scope="row">602754</th>
-                <td>Manha Islam</td>
-                <td>Computer</td>
-                <td>1st</td>
-                <td>5th</td>
-                <td><span class="badge text-bg-danger">Unverified</span></td>
-                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-              </tr>
-              <tr>
-                <th scope="row">602761</th>
-                <td>Kholilur Jaman</td>
-                <td>Computer</td>
-                <td>1st</td>
-                <td>5th</td>
-                <td><span class="badge text-bg-success">Verified</span></td>
-                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-              </tr>
-              <tr>
-                <th scope="row">602762</th>
-                <td>Mahmud Hasan</td>
-                <td>Computer</td>
-                <td>1st</td>
-                <td>5th</td>
-                <td><span class="badge text-bg-success">Verified</span></td>
-                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-              </tr>
-              <tr>
-                <th scope="row">602774</th>
-                <td>Fahim Alom</td>
-                <td>Computer</td>
-                <td>1st</td>
-                <td>5th</td>
-                <td><span class="badge text-bg-success">Verified</span></td>
-                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-              </tr>
+            {% for student in students %}
+                <tr>
+                    <th scope="row">{{ student.roll }}</th>
+                    <td class="text-capitalize">{{ student.name }}</td>
+                    <td class="text-capitalize">{{ student.department }}</td>
+                    <td class="text-capitalize">{{ student.shift }}</td>
+                    <td>{{ student.semester }}</td>
+                    {% if student.is_active == True %}
+                        <td><span class="badge text-bg-success">Verified</span></td>
+                    {% else %}
+                        <td><span class="badge text-bg-danger">Unverified</span></td>
+                    {% endif %}
+
+                    <td><span role="button" data-bs-toggle="modal" data-bs-target="#Modal{{ student.id }}"><i
+                            class="fa fa-edit"></i></span></td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="Modal{{ student.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Student Information</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <img class="rounded-circle" src="{% if student.image %}{{ student.image.url }}{% endif %}"
+                                     style="height: 150px; width: 150px" alt="">
+                                <h3>{{ student.name }}</h3>
+                                <div class="row">
+                                    {% for name, value in student|get_fields %}
+                                        {% if name == "image" or name == "signature" or name == "parent signature" or name == "ID" or name == "user" %}
+                                        {% else %}
+                                            <li class="col-6"><strong
+                                                    class="text-capitalize">{{ name }}:</strong> {{ value }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li class="col-6"><strong class="text-capitalize">Signature:</strong> <img
+                                            src="{% if student.image %}{{ student.signature.url }}{% endif %}" alt="signature" style="height: 70px">
+                                    </li>
+                                    <li class="col-6"><strong class="text-capitalize">Parent signature:</strong> <img
+                                            src="{% if student.image %}{{ student.parent_signature.url }}{% endif %}" alt="signature" style="height: 70px">
+                                    </li>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a href="{% url 'librarian:active_student' student.id %}"><button type="button" class="btn btn-success">Active</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            
 
 
             </tbody>
-          </table>
-        </div>
+        </table>
+    </div>
 
 {% endblock %}
 {% block js %}
-  <script>
-    $(document).ready(function () {
-      $("#search-box").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#equipment-table tbody tr").filter(function () {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    <script>
+        $(document).ready(function () {
+            $("#search-box").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#equipment-table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
-      });
-    });
 
-    // Filter by status all, verified, unverified
-    $(document).ready(function () {
-      // Function to filter students based on status
-      $('#filter').change(function () {
-        var status = $(this).val();
-        if (status === 'all') {
-          // Show all rows if 'All' is selected
-          $('#equipment-table tbody tr').show();
-        } else {
-          // Hide all rows first
-          $('#equipment-table tbody tr').hide();
-          // Show rows with matching status
-          $('#equipment-table tbody tr').each(function () {
-            if ($(this).find('td:nth-child(6)').text().trim() === status) {
-              $(this).show();
-            }
-          });
-        }
-      });
-    });
+        // Filter by status all, verified, unverified
+        $(document).ready(function () {
+            // Function to filter students based on status
+            $('#filter').change(function () {
+                var status = $(this).val();
+                if (status === 'all') {
+                    // Show all rows if 'All' is selected
+                    $('#equipment-table tbody tr').show();
+                } else {
+                    // Hide all rows first
+                    $('#equipment-table tbody tr').hide();
+                    // Show rows with matching status
+                    $('#equipment-table tbody tr').each(function () {
+                        if ($(this).find('td:nth-child(6)').text().trim() === status) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
 
 
-  </script>
+    </script>
 {% endblock %}
 </body>
 

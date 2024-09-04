@@ -12,6 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from accounts.models import StudentProfile
 from django.contrib import messages
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 # Create your views here.
 
 @staff_member_required
@@ -30,12 +31,17 @@ def dashboard(request):
 @staff_member_required
 def students(request):
     student_list = StudentProfile.objects.all()
+    paginator = Paginator(student_list, 10)
     return render(request, 'librarian/studentList.html', {'students': student_list})
 @staff_member_required
 def manage_book(request):
     books = Book.objects.all()
+    paginator = Paginator(books, 10)
+
+    page_num = request.GET.get("page")
+    page_obj = paginator.get_page(page_num)
     context = {
-        'books': books,
+        'books': page_obj,
     }
     return render(request, 'librarian/manageBooks.html', context)
 
@@ -111,3 +117,48 @@ def return_book(request, req_id):
     book_req.save()
 
     return redirect('librarian:book_requests')
+
+@staff_member_required
+def active_student(request, student_id):
+    student = StudentProfile.objects.get(id=student_id)
+    student.is_active = True
+    student.save()
+    return redirect("librarian:students")
+
+
+@staff_member_required
+def update_book_info(request):
+    if request.method == "POST":
+        main_id = request.POST.get("id", None)
+        if main_id:
+            obj = Book.objects.get(id=main_id)
+        else:
+            obj = Book()
+
+        obj.title = request.POST.get("title")
+        obj.author = request.POST.get("author")
+        obj.desc = request.POST.get("desc")
+        obj.pages = request.POST.get("pages")
+        obj.count = request.POST.get("count")
+        obj.book_id = request.POST.get("book_id")
+        obj.issued = request.POST.get("issued")
+
+        # Handle category
+        category_name = request.POST.get("category")
+        cat = Category.objects.filter(name__icontains=category_name).first()
+        if cat:
+            obj.category = cat
+        else:
+            obj.category = Category.objects.create(name=category_name, desc="default")
+
+        # Handle image upload
+        image = request.FILES.get("image")
+        if image:
+            obj.image = image
+
+        # Save the updated book object
+        obj.save()
+
+        return redirect("librarian:manage_book")
+
+

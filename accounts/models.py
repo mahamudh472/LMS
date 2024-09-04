@@ -33,3 +33,6 @@ class StudentProfile(models.Model):
     
     def __str__(self):
         return self.name
+
+    def get_fields(self):
+        return self._meta.get_fields()

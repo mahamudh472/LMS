@@ -1,73 +1,218 @@
 {% extends "librarian/dashboard.html" %}
 {% load static %}
 {% block content %}
-                <div class="table-title-container d-flex justify-content-between">
-                    <h2>Manage Books</h2>
-                    <div class="table-search-container d-flex w-50 gap-2">
-                        <input type="text" class="form-control" id="search-box" placeholder="Search">
-                         <!-- Button trigger add modal -->
-                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addBookModal"><i class="fa fa-plus"></i></button>
+    <div class="table-title-container d-flex justify-content-between">
+        <h2>Manage Books</h2>
+        <div class="table-search-container d-flex w-50 gap-2">
+            <input type="text" class="form-control" id="search-box" placeholder="Search">
+            <!-- Button trigger add modal -->
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addBookModal"><i
+                    class="fa fa-plus"></i></button>
 
-                       
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="addBookModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="addBookModalLabel">Modal title</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="addBookModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addBookModalLabel">Add book</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <form action="{% url 'librarian:update_book_info' %}" method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Title:</label>
+                                    <input type="text" class="form-control" name="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Author
+                                        name:</label>
+                                    <input type="text" class="form-control" name="author" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+                                    <textarea class="form-control" name="desc" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Category:</label>
+                                    <input type="text" class="form-control" name="category" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Book image:</label>
+                                    <input type="file" class="form-control" name="image" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Pages:</label>
+                                    <input type="number" class="form-control" name="pages" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Count:</label>
+                                    <input type="number" class="form-control" name="count" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Book id:</label>
+                                    <input type="number" class="form-control" name="book_id" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label fw-bold">Issued:</label>
+                                    <input type="number" class="form-control" name="issued" required>
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <table class="table table-striped" id="equipment-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th scope="col">Book ID</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Writer</th>
+                <th scope="col">Available</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <th style="text-align: center;"><img src="{{ book.image.url }}" alt=""></th>
+                    <td scope="row">{{ book.book_id }}</td>
+                    <td class="truncate-text">{{ book.title }}</td>
+                    <td class="truncate-text">{{ book.author }}</td>
+                    <td>{{ book.available }} / {{ book.count }}</td>
+                    <td><span role="button" data-bs-toggle="modal" data-bs-target="#Modalfor{{ book.id }}"><i
+                            class="fa fa-edit"></i></span></td>
+                </tr>
+
+                <div class="modal fade" id="Modalfor{{ book.id }}" tabindex="-1" aria-labelledby="addBookModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="addBookModalLabel">Manage book</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form action="{% url 'librarian:update_book_info' %}" method="post"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Title:</label>
+                                        <input type="text" class="form-control" value="{{ book.title }}" name="title"
+                                               required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Author
+                                            name:</label>
+                                        <input type="text" class="form-control" value="{{ book.author }}" name="author"
+                                               required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+                                        <textarea class="form-control" rows="3" name="desc">{{ book.desc }}</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1"
+                                               class="form-label fw-bold">Category:</label>
+                                        <input type="text" class="form-control" value="{{ book.category }}"
+                                               name="category" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Book
+                                            image:</label>
+                                        <img class="form-control" src="{{ book.image.url }}"
+                                             style="height:100px; width: 100px">
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Pages:</label>
+                                        <input type="number" class="form-control" name="pages" value="{{ book.pages }}"
+                                               required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Count:</label>
+                                        <input type="number" class="form-control" name="count" value="{{ book.count }}"
+                                               required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Book
+                                            id:</label>
+                                        <input type="number" class="form-control" name="book_id"
+                                               value="{{ book.book_id }}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Issued:</label>
+                                        <input type="number" class="form-control" name="issued"
+                                               value="{{ book.issued }}" required>
+                                    </div>
+                                    <input type="hidden" value="{{ book.id }}" name="id">
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button class="btn btn-danger">Remove</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="card mt-2">
-                    <table class="table table-striped" id="equipment-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th scope="col">Book ID</th>
-                                <th scope="col">Book Name</th>
-                                <th scope="col">Writer</th>
-                                <th scope="col">Available</th>
-
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for book in books %}
-                            <tr>
-                                <th style="text-align: center;"><img src="{{ book.image.url }}" alt=""></th>
-                                <td scope="row">{{ book.book_id }}</td>
-                                <td>{{ book.title }}</td>
-                                <td>{{ book.author }}</td>
-                                <td>{{ book.available }} / {{ book.count }}</td>
-                                <td><span class="cursor-pointer "><i class="fa fa-edit"></i></span></td>
-                            </tr>
-                            {% endfor %}
-                        
+            {% endfor %}
 
 
+            </tbody>
+        </table>
 
 
-                        </tbody>
-                    </table>
-                    
-                </div>
+    </div>
 
-            
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination my-3 ">
+            {% if books.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ books.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+            {% endif %}
+
+            <li class="page-item"><a class="page-link" href="#">{{ books.number }}</a></li>
+            <li class="page-item"><a class="page-link disabled" href="#">...</a></li>
+            {% if books.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="?page={{ books.paginator.num_pages }}">{{ books.paginator.num_pages }}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ books.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+
 {% endblock %}
 {% block js %}
     <script>
@@ -79,8 +224,16 @@
                 });
             });
         });
-
-       
+        $(document).ready(function () {
+            // Truncate book titles
+            $('.truncate-text').each(function () {
+                var maxLength = 23;
+                var text = $(this).text();
+                if (text.length > maxLength) {
+                    $(this).text(text.substring(0, maxLength) + '...');
+                }
+            });
+        });
 
 
     </script>
