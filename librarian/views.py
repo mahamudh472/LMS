@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 
 from LMS import settings
-from main.models import Book, BookRequest, OtpVerification, Category
+from main.models import Book, BookRequest, OtpVerification, Category, Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from accounts.models import StudentProfile
@@ -161,4 +161,17 @@ def update_book_info(request):
 
         return redirect("librarian:manage_book")
 
+@staff_member_required
+def remove_book(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+    return redirect("librarian:manage_book")
 
+
+@staff_member_required
+def comments(request):
+    comment = Comment.objects.all()
+    context = {
+        "comments": comment
+    }
+    return render(request, "librarian/comments.html", context)

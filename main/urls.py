@@ -10,5 +10,6 @@ urlpatterns = [
     path('request-book/', views.request_book, name='request_book'),
     path('add_to_wishlist/<int:book_id>', views.add_to_wishlist, name="add_to_wishlist"),
     path('remove_from_wishlist/<int:book_id>', views.remove_from_wishlist, name="remove_from_wishlist"),
+    path('add_comment/', views.add_comment, name="add_comment")
 
 ]

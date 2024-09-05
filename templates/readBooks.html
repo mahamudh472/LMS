@@ -15,7 +15,7 @@
 
     <main class="read_books mt-3">
         <div class="container">
-            <div class="row shadow bg-primary-subtle rounded py-3">
+            <div class="row shadow rounded py-3" style="background: #F1E1C2;">
                 <div class="col-4">
                     <img class="img-fluid" src="{{ book.image.url }}" alt="">
                 </div>
@@ -69,53 +69,32 @@
                 </table>
             </div>
             <div class="row">
-                <h2>Comments</h2>
-                <div class="row">
-                    <div class="col-12 p-3">
-                        
-                        <a href="#">
-                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
-                        </a>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 p-3">
-                        
-                        <a href="#">
-                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
-                        </a>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 p-3">
-                        
-                        <a href="#">
-                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
-                        </a>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 p-3">
-                        
-                        <a href="#">
-                            <h6><i class="fa fa-user-circle mx-2"></i>Mahmud Hasan</h6>
-                        </a>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet et facere facilis nemo quam quibusdam, sunt! Asperiores eum rem ut.
-                        </p>
-                    </div>
-                </div>
+                <h2>Comments({{book.comment_set.count}})</h2>
 
+                <form action="{% url 'main:add_comment' %}" method="post">
+                    {% csrf_token %}
+                <div class="row my-2 mx-2 p-2" >
+                    <div class="col-10" style="padding: 0 !important;">
+                        <input type="text" class="comment-input" name="comment" placeholder="Share your thoughts about this book." >
+                    </div>
+                    <div class="col-2" style="padding: 0 !important;">
+                        <input type="submit" class="my-btn-secondary my-btn-right" value="Comment"  >
+                    </div><input type="hidden" name="book_id" value="{{ book.id }}">
+                </div>
+        </form>
+        {% for comment in book.comment_set.all %}
+
+        {% include 'components/comment.html' %}
+        
+        {% endfor %}
+
+                
+                
             </div>
+            <div class="col-12 " style="position: relative;">
+                <button class="my-btn-primary" style="width: 150px; position: absolute;left: 0; right: 0; margin: auto;">Load more</button>
+            </div>
+            
         </div>
     </main>
 

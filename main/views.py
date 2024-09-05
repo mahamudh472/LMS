@@ -9,7 +9,7 @@ from django.utils import timezone
 
 from LMS import settings
 from accounts.models import StudentProfile
-from main.models import Category, Book, BookRequest, OtpVerification, WishList
+from main.models import Category, Book, BookRequest, OtpVerification, WishList, Comment
 from django.core.mail import send_mail
 
 
@@ -145,3 +145,18 @@ def request_book(request):
 
 
         return redirect('main:book', book_id=book.id)
+
+
+def add_comment(request):
+    if request.method == "POST":
+        book_id = request.POST.get("book_id", None)
+        book = Book.objects.get(id=book_id)
+        comment = request.POST.get("comment")
+        if book:
+            com = Comment.objects.create(
+                book=book,
+                student=request.user.studentprofile,
+                text=comment
+            )
+            com.save()
+        return redirect("main:book", book_id)

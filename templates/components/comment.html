@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="row">
+    <div class="col-12 p-2">
+        <div class="row">
+        <div style="width: 60px;">
+            <img src="{% static 'img/library_member_img/profile.png' %}" alt="" style="height: 50px; width: 50px; border-radius: 50%;">
+        </div>
+        <div class="col-7 my-1">
+            <a href="#" class="fw-bold">{{comment.student.name}} <div class="badge text-bg-success">admin</div></a>
+            <div class="" style="font-size: 12px;"><i class="fa fa-calendar mx-1"></i>{{comment.add_at}}</div>
+        </div>
+    </div>
+        <p class="py-2">
+            {{comment.text}}
+        </p>
+    </div>
+</div>

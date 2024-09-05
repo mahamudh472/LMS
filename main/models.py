@@ -74,3 +74,10 @@ class WishList(models.Model):
     book = models.ForeignKey('main.Book', on_delete=models.CASCADE)
     add_at = models.DateTimeField(auto_now_add=True)
 
+class Comment(models.Model):
+    student = models.ForeignKey('accounts.StudentProfile', on_delete=models.CASCADE)
+    book = models.ForeignKey('main.Book', on_delete=models.CASCADE)
+    text = models.TextField(blank=True, null=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True )
+    add_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

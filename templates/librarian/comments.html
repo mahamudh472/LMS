@@ -1,0 +1,57 @@
+{% extends "librarian/dashboard.html" %}
+{% load static %}
+
+{% block content %}
+<table class="table table-responsive">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Book</th>
+        <th>Date & Time</th>
+        <th>Comment</th>
+        <th>Action</th>
+    </tr>
+    {% for comment in comments %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{comment.student.name}}</td>
+        <td>{{comment.book.title}}</td>
+        <td>{{comment.add_at}}</td>
+        <td>{{comment.text}}</td>
+        <td><button class="btn btn-secondary"><i class="fa fa-edit"></i></button></td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td>2</td>
+        <td>Mahmud Hasan</td>
+        <td>Python programming</td>
+        <td>15 jul 2024 12:10pm</td>
+        <td>This book is awesome.</td>
+        <td><button class="btn btn-secondary"><i class="fa fa-edit"></i></button></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Mahmud Hasan</td>
+        <td>Python programming</td>
+        <td>15 jul 2024 12:10pm</td>
+        <td>This book is awesome.</td>
+        <td><button class="btn btn-secondary"><i class="fa fa-edit"></i></button></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Mahmud Hasan</td>
+        <td>Python programming</td>
+        <td>15 jul 2024 12:10pm</td>
+        <td>This book is awesome.</td>
+        <td><button class="btn btn-secondary"><i class="fa fa-edit"></i></button></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Mahmud Hasan</td>
+        <td>Python programming</td>
+        <td>15 jul 2024 12:10pm</td>
+        <td>This book is awesome.</td>
+        <td><button class="btn btn-secondary"><i class="fa fa-edit"></i></button></td>
+    </tr>
+</table>
+{% endblock %}
