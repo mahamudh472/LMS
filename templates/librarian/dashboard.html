@@ -10,6 +10,11 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <style>
+        #content.active{
+            padding-left: 0;
+        }
+    </style>
     {% block css %}{% endblock %}
 </head>
 <body>
@@ -109,11 +114,30 @@
         crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#content').toggleClass('active');
-        });
+    // Check if the device width is less than 800px
+    if ($(window).width() < 800) {
+        $('#sidebar').addClass('active');
+        $('#content').addClass('active');
+    }
+
+    // Toggle sidebar on button click
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+        $('#content').toggleClass('active');
     });
+    
+    // Listen for window resize to ensure responsiveness
+    $(window).resize(function() {
+        if ($(window).width() < 800) {
+            $('#sidebar').addClass('active');
+            $('#content').addClass('active');
+        } else {
+            $('#sidebar').removeClass('active');
+            $('#content').removeClass('active');
+        }
+    });
+});
+
 
     // active menu page highlight
     $(document).ready(function () {

@@ -33,8 +33,8 @@
                 <h2 class="writer">{{book.author}}</h2>
                 <p class="available_status">Available: {{book.count}}</p>
                 <div class="read_and_read_btn">
-                    <a href="{% url 'main:add_to_wishlist' book.id %}" class="wish_list">Wish List</a>
-                    <a href="{% url 'main:book' book.id %}" class="read_now">Read Now</a>
+                    <a href="{% url 'main:add_to_wishlist' book.id %}" class="wish_list my-btn my-btn-secondary .my-btn-sm">Wish List</a>
+                    <a href="{% url 'main:book' book.id %}" class="read_now my-btn-primary .my-btn-sm">Read Now</a>
                 </div>
             </div>
         {% endfor %}

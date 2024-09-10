@@ -59,6 +59,7 @@ h2, h3 {
     border-radius: 5px !important;
     outline: none !important;
     border: none !important;
+    text-decoration: none !important;
 }
 
 .my-btn-primary {
@@ -111,4 +112,7 @@ h2, h3 {
     background: none;
     outline: none;
     padding: 5px 8px;
+}
+.my-btn-sm{
+    font-size: 12px !important;
 }
