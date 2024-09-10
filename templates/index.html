@@ -23,13 +23,13 @@
     <div class="container books_show_main">
         <div class="display_book_cata_and_more d-flex justify-content-between">
             <h2>Top Rated Books List</h2>
-            <a href="#">More</a>
+            <a href="{% url 'main:all_categories' %}">More</a>
         </div>
 
         <div class="catagory_slider" id="fontSlider1">
             {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
+                <a href="{% url 'main:book' book.id %}"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
             {% endfor %}
@@ -53,14 +53,14 @@
     <div class="container books_show_main">
         <div class="display_book_cata_and_more d-flex justify-content-between">
             <h2>Most Read</h2>
-            <a href="#">More</a>
+            <a href="{% url 'main:all_categories' %}">More</a>
         </div>
 
         <div class="catagory_slider" id="fontSlider2">
 
             {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
+                <a href="{% url 'main:book' book.id %}"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
             {% endfor %}
@@ -85,14 +85,14 @@
     <div class="container books_show_main">
         <div class="display_book_cata_and_more d-flex justify-content-between">
             <h2>New Addition</h2>
-            <a href="#">More</a>
+            <a href="{% url 'main:all_categories' %}">More</a>
         </div>
 
         <div class="catagory_slider" id="fontSlider3">
 
             {% for book in books %}
             <div class="books_show_card text-center col-3 col-xl-3 col-md-3 col-sm-6 col-6">
-                <a href="#"> <img src="{{ book.image.url }}" alt="photo"></a>
+                <a href="{% url 'main:book' book.id %}"> <img src="{{ book.image.url }}" alt="photo"></a>
 
             </div>
             {% endfor %}
